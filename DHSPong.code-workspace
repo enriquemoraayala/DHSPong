@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../repositories/BoingSGDK"
+		},
+		{
+			"path": "../../repositories/Code-the-Classics-Vol1"
+		}
+	],
+	"settings": {
+		"terminal.integrated.defaultProfile.windows": "Command Prompt"
+	}
+}
