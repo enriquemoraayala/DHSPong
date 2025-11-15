@@ -6,14 +6,21 @@ void updatePlayer(Player *player)
     switch (player->input)
     {
     case UP:
-        player->y -= PLAYER_SPEED;
+        if (!isTouchingTop(player->x + 10, player->y + 2, PADDLE_WIDTH, PADDLE_HEIGTH))
+        {
+            player->y -= PLAYER_SPEED;
+        }
         break;
     case DOWN:
-        player->y += PLAYER_SPEED;
+        if (!isTouchingBottom(player->x + 10, player->y + 2, PADDLE_WIDTH, PADDLE_HEIGTH))
+        {
+            player->y += PLAYER_SPEED;
+        }
         break;
     default:
         break;
     }
+    
 }
 
 void drawPlayer(Player *player)
