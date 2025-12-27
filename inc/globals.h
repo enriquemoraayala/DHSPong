@@ -8,4 +8,6 @@
 
     #define BALL_INITIAL_X 144
     #define BALL_INITIAL_Y 97
+    #define MAX_GOALS 3
+
 #endif

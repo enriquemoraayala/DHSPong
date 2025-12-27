@@ -48,7 +48,7 @@ void checkInputs()
     }
     else
     {
-        // TODO: MODE IA
+        game.player2.input = iaInput();
     }
 }
 
@@ -63,6 +63,10 @@ void update()
         break;
     case LOOP_GAME:
         updateGame();
+        break;
+    case GAME_OVER:
+        updateGameOver();
+        break;
     default:
         break;
     }
@@ -80,6 +84,9 @@ void draw()
         break;
     case LOOP_GAME:
         drawGame();
+        break;
+    case GAME_OVER:
+        drawGameOver();
     default:
         break;
     }

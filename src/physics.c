@@ -36,3 +36,15 @@ bool isTouchingBottom(u16 x, u16 y, u16 w, u16 h)
     BoxCollider box2 = {BOTTOM_EDGE, BOTTOM_EDGE_Y, EDGE_WIDTH, EDGE_HEIGHT};
     return isColliding(&box1, &box2);
 }
+
+bool isTouchingLeftEdge(u16 x, u16 y, u16 w, u16 h){
+    BoxCollider box1 = {x, y, w, h};
+    BoxCollider box2 = {TOP_EDGE, TOP_EDGE, LATERAL_EDGE_WIDTH, LATERAL_EDGE_HEIGHT};
+    return isColliding(&box1, &box2);
+}
+
+bool isTouchingRightEdge(u16 x, u16 y, u16 w, u16 h){
+    BoxCollider box1 = {x, y, w, h};
+    BoxCollider box2 = {LATERAL_EDGE, 0, LATERAL_EDGE_WIDTH, LATERAL_EDGE_HEIGHT};
+    return isColliding(&box1, &box2);
+}

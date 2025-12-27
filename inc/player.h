@@ -20,6 +20,7 @@ typedef enum input
 typedef struct
 {
     Sprite *sprite;
+    Sprite *marc;
     u16 x;
     u16 y;
     s16 score;
@@ -32,5 +33,7 @@ void initPlayer(Player *, u16, u16, PlayerMode);
 void updatePlayer(Player *);
 
 void drawPlayer(Player *);
+
+s8 isTouchingPaddle(Player*, u16, u16, u16, u16);
 
 #endif
