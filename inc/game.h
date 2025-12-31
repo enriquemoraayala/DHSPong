@@ -33,10 +33,25 @@
         Player player2;
         Ball ball;
         Status state;
+        u8 lastScored;
         bool singlePlayer;
     } Game;
 
+    struct{
+        Sprite * menuSel1;
+        Sprite * menuSel2;
+        bool twoPlayers;
+    } menuStruct;
+
     extern Game game;
+
+    void initMenu(void);
+
+    void drawInitMenu(void);
+
+    void updateMenu(void);
+
+    void drawMenu(void);
 
     void initGame();
 

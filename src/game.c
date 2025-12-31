@@ -70,6 +70,7 @@ void initGame()
     game.player1.input = NONE;
     game.player2.input = NONE;
     game.ball.launched = FALSE;
+    game.lastScored = 1;
     game.ball.dx = 0;
     game.ball.dy = 0;
     game.player1.score = 0;

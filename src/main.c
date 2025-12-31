@@ -57,7 +57,11 @@ void update()
     switch (game.state)
     {
     case INIT_MENU:
+        initMenu();
+        break;
     case MENU:
+        updateMenu();
+        break;
     case INIT_GAME:
         initGame();
         break;
@@ -77,7 +81,11 @@ void draw()
     switch (game.state)
     {
     case INIT_MENU:
+        drawInitMenu();
+        break;
     case MENU:
+        drawMenu();
+        break;
     case INIT_GAME:
         drawInitGame();
         game.state=LOOP_GAME;

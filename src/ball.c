@@ -14,8 +14,13 @@ void updateBall()
     {
         if (game.player1.input == A)
         {
-            game.ball.dx = -BALL_SPEED;
-            game.ball.dy = BALL_SPEED;
+            if(game.lastScored == 1){
+                game.ball.dx = -BALL_SPEED;
+                game.ball.dy = BALL_SPEED;
+            }else{
+                game.ball.dx = BALL_SPEED;
+                game.ball.dy = -BALL_SPEED;
+            }
             game.ball.launched = TRUE;
         }
     }
@@ -49,6 +54,7 @@ void updateBall()
         if (isTouchingLeftEdge(game.ball.x + 8, game.ball.y + 8, 13, 13))
         {
             game.player2.score++;
+            game.lastScored = 2;
             if (game.player2.score > MAX_GOALS)
             {
                 deInitGame();
@@ -63,6 +69,7 @@ void updateBall()
         if (isTouchingRightEdge(game.ball.x + 8, game.ball.y + 8, 13, 13))
         {
             game.player1.score++;
+            game.lastScored = 1;
             if (game.player1.score > 9)
             {
                 deInitGame();
@@ -135,6 +142,7 @@ void restartGame()
     game.ball.x = BALL_INITIAL_X;
     game.ball.y = BALL_INITIAL_Y;
     game.ball.launched = FALSE;
+    game.lastScored = 1;
 }
 
 void drawBall()
