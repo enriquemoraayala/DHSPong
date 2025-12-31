@@ -4,6 +4,7 @@
 
 #define PLAYER_SPEED 3
 #define BALL_SPEED 4
+#define BALL_MAX_SPEED 8
 #define BALL_OFFSET 8
 #define BALL_DIAMETRE 16
 
@@ -13,7 +14,7 @@
 #define PADDLE_WIDTH 9
 #define PADDLE_HEIGTH 58
 
-#define PADDLE_EXTREME_WIDTH 4
+#define PADDLE_EXTREME_WIDTH 8
 #define PADDLE_EXTREME_HEIGTH 4
 
 #define TOP_EDGE 0

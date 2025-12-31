@@ -23,22 +23,39 @@ void updateBall()
     {
         if (isTouchingTop(game.ball.x + 8, game.ball.y + 8, 13, 13))
         {
-            game.ball.dy = BALL_SPEED;
+            if (game.ball.dy < -BALL_SPEED)
+            {
+                game.ball.dy = BALL_MAX_SPEED;
+            }
+            else
+            {
+                game.ball.dy = BALL_SPEED;
+            }
             game.ball.impact = TRUE;
         }
         if (isTouchingBottom(game.ball.x + 8, game.ball.y + 8, 13, 13))
         {
-            game.ball.dy = -BALL_SPEED;
+            if (game.ball.dy > BALL_SPEED)
+            {
+                game.ball.dy = -BALL_MAX_SPEED;
+            }
+            else
+            {
+                game.ball.dy = -BALL_SPEED;
+            }
             game.ball.impact = TRUE;
         }
 
         if (isTouchingLeftEdge(game.ball.x + 8, game.ball.y + 8, 13, 13))
         {
             game.player2.score++;
-            if(game.player2.score > MAX_GOALS){
+            if (game.player2.score > MAX_GOALS)
+            {
                 deInitGame();
                 game.state = GAME_OVER;
-            }else{
+            }
+            else
+            {
                 restartGame();
             }
         }
@@ -46,10 +63,13 @@ void updateBall()
         if (isTouchingRightEdge(game.ball.x + 8, game.ball.y + 8, 13, 13))
         {
             game.player1.score++;
-            if(game.player1.score > 9){
+            if (game.player1.score > 9)
+            {
                 deInitGame();
                 game.state = GAME_OVER;
-            }else{
+            }
+            else
+            {
                 restartGame();
             }
         }
@@ -72,6 +92,7 @@ void updateBall()
 void paddelTouched(s8 paddelTouch)
 {
     // value 0 = FALSE
+    // value != o -> hemos tocado algo
     if (paddelTouch)
     {
         game.ball.impact = TRUE;
@@ -86,12 +107,18 @@ void paddelTouched(s8 paddelTouch)
             game.ball.dy = BALL_SPEED;
             break;
         case 2:
+            // si la toco la bola con la parte inferior del paddle, sale más rápido
             game.ball.dx = CHANGE_SIGN(game.ball.dx);
-            game.ball.dy = BALL_SPEED;
+            game.ball.dy = BALL_MAX_SPEED;
             break;
         case 3:
             game.ball.x = BALL_INITIAL_X;
             game.ball.y = BALL_INITIAL_Y;
+            break;
+        case 4:
+            // si la toco la bola con la parte superior del paddle, sale más rápido
+            game.ball.dx = CHANGE_SIGN(game.ball.dx);
+            game.ball.dy = -BALL_MAX_SPEED;
             break;
         }
     }
@@ -113,15 +140,18 @@ void restartGame()
 void drawBall()
 {
     SPR_setPosition(game.ball.sprite, game.ball.x, game.ball.y);
-    if(game.ball.impact){
-        game.ball.impactSpr = SPR_addSprite(&hit, game.ball.x+4, game.ball.y+4, TILE_ATTR(PAL1,FALSE, FALSE, FALSE));
+    if (game.ball.impact)
+    {
+        game.ball.impactSpr = SPR_addSprite(&hit, game.ball.x + 4, game.ball.y + 4, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
         SPR_setFrameChangeCallback(game.ball.impactSpr, deInitImpact);
         game.ball.impact = FALSE;
     }
 }
 
-void deInitImpact(Sprite * sprite){
-    if(sprite->frameInd == 3){
+void deInitImpact(Sprite *sprite)
+{
+    if (sprite->frameInd == 3)
+    {
         SPR_releaseSprite(sprite);
     }
 }
