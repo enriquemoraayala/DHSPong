@@ -3,6 +3,7 @@
 #include "globals.h"
 #include "kdebug.h"
 #include "sprt.h"
+#include "sound.h"
 
 void paddelTouched(s8 paddelTouch);
 void restartGame();
@@ -14,10 +15,13 @@ void updateBall()
     {
         if (game.player1.input == A)
         {
-            if(game.lastScored == 1){
+            if (game.lastScored == 1)
+            {
                 game.ball.dx = -BALL_SPEED;
                 game.ball.dy = BALL_SPEED;
-            }else{
+            }
+            else
+            {
                 game.ball.dx = BALL_SPEED;
                 game.ball.dy = -BALL_SPEED;
             }
@@ -37,6 +41,7 @@ void updateBall()
                 game.ball.dy = BALL_SPEED;
             }
             game.ball.impact = TRUE;
+            game.ball.bounced = TRUE;
         }
         if (isTouchingBottom(game.ball.x + 8, game.ball.y + 8, 13, 13))
         {
@@ -49,6 +54,7 @@ void updateBall()
                 game.ball.dy = -BALL_SPEED;
             }
             game.ball.impact = TRUE;
+            game.ball.bounced = TRUE;
         }
 
         if (isTouchingLeftEdge(game.ball.x + 8, game.ball.y + 8, 13, 13))
@@ -62,6 +68,7 @@ void updateBall()
             }
             else
             {
+                game.ball.goalhit = TRUE;
                 restartGame();
             }
         }
@@ -77,6 +84,7 @@ void updateBall()
             }
             else
             {
+                game.ball.goalhit = TRUE;
                 restartGame();
             }
         }
@@ -103,6 +111,7 @@ void paddelTouched(s8 paddelTouch)
     if (paddelTouch)
     {
         game.ball.impact = TRUE;
+        game.ball.paddlehit = TRUE;
         switch (paddelTouch)
         {
         case -1:
@@ -143,6 +152,9 @@ void restartGame()
     game.ball.y = BALL_INITIAL_Y;
     game.ball.launched = FALSE;
     game.lastScored = 1;
+    game.ball.bounced = FALSE;
+    game.ball.goalhit = FALSE;
+    game.ball.paddlehit = FALSE;
 }
 
 void drawBall()
@@ -153,6 +165,21 @@ void drawBall()
         game.ball.impactSpr = SPR_addSprite(&hit, game.ball.x + 4, game.ball.y + 4, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
         SPR_setFrameChangeCallback(game.ball.impactSpr, deInitImpact);
         game.ball.impact = FALSE;
+    }
+    if (game.ball.bounced)
+    {
+        XGM2_playPCM(bounce, 5120, SOUND_PCM_CH_AUTO);
+        game.ball.bounced = FALSE;
+    }
+    if (game.ball.goalhit)
+    {
+        XGM2_playPCM(goal, 6912, SOUND_PCM_CH_AUTO);
+        game.ball.goalhit = FALSE;
+    }
+    if (game.ball.paddlehit)
+    {
+        XGM2_playPCM(playerhit, 6912, SOUND_PCM_CH_AUTO);
+        game.ball.paddlehit = FALSE;
     }
 }
 

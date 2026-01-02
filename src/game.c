@@ -75,6 +75,9 @@ void initGame()
     game.ball.dy = 0;
     game.player1.score = 0;
     game.player2.score = 0;
+    game.ball.bounced = FALSE;
+    game.ball.goalhit = FALSE;
+    game.ball.paddlehit = FALSE;
 }
 
 //loop Game

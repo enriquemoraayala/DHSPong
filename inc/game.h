@@ -6,6 +6,8 @@
 
     typedef enum state
     {
+        INIT_LOGO,
+        LOGO,
         INIT_MENU,
         MENU,
         INIT_GAME,
@@ -25,6 +27,9 @@
         s16 dy;
         bool launched;
         bool impact;
+        bool bounced;
+        bool goalhit;
+        bool paddlehit;
     } Ball;
 
     typedef struct
@@ -43,7 +48,17 @@
         bool twoPlayers;
     } menuStruct;
 
+    u16 frameCounter;
+
     extern Game game;
+
+    void initLogo(void);
+
+    void drawInitLogo(void);
+
+    void updateLogo(void);
+
+    void drawLogo(void);
 
     void initMenu(void);
 
