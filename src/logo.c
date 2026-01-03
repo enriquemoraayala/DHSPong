@@ -3,6 +3,8 @@
 #include "gfx.h"
 
 
+u16 frameCounter;
+
 void initLogo(void){
     frameCounter = 0;
 }

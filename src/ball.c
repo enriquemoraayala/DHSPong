@@ -42,9 +42,11 @@ void updateBall()
             }
             game.ball.impact = TRUE;
             game.ball.bounced = TRUE;
+            XGM2_playPCM(bounce, sizeof(bounce), SOUND_PCM_CH_AUTO);
         }
         if (isTouchingBottom(game.ball.x + 8, game.ball.y + 8, 13, 13))
         {
+            XGM2_playPCM(bounce, sizeof(bounce), SOUND_PCM_CH_AUTO);
             if (game.ball.dy > BALL_SPEED)
             {
                 game.ball.dy = -BALL_MAX_SPEED;
@@ -110,6 +112,7 @@ void paddelTouched(s8 paddelTouch)
     // value != o -> hemos tocado algo
     if (paddelTouch)
     {
+        XGM2_playPCM(playerhit, sizeof(playerhit), SOUND_PCM_CH_AUTO);   
         game.ball.impact = TRUE;
         game.ball.paddlehit = TRUE;
         switch (paddelTouch)
@@ -168,7 +171,7 @@ void drawBall()
     }
     if (game.ball.bounced)
     {
-        XGM2_playPCM(bounce, 5120, SOUND_PCM_CH_AUTO);
+       // XGM2_playPCM(bounce, sizeof(bounce), SOUND_PCM_CH_AUTO);
         game.ball.bounced = FALSE;
     }
     if (game.ball.goalhit)
@@ -178,7 +181,7 @@ void drawBall()
     }
     if (game.ball.paddlehit)
     {
-        XGM2_playPCM(playerhit, 6912, SOUND_PCM_CH_AUTO);
+        // XGM2_playPCM(playerhit, 6912, SOUND_PCM_CH_AUTO);
         game.ball.paddlehit = FALSE;
     }
 }

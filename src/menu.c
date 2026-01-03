@@ -3,7 +3,10 @@
 #include "gfx.h"
 #include "sprt.h"
 
+MenuStruct menuStruct;
+
 void initMenu(void){
+
     menuStruct.twoPlayers = FALSE;
 }
 

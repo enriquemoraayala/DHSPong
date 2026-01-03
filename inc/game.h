@@ -1,5 +1,5 @@
 #ifndef _H_GAME
-#define _H_GAME
+    #define _H_GAME
 
     #include <genesis.h>
     #include "player.h"
@@ -42,14 +42,13 @@
         bool singlePlayer;
     } Game;
 
-    struct{
+    typedef struct{
         Sprite * menuSel1;
         Sprite * menuSel2;
         bool twoPlayers;
-    } menuStruct;
+    } MenuStruct;
 
-    u16 frameCounter;
-
+    extern MenuStruct menuStruct;
     extern Game game;
 
     void initLogo(void);
