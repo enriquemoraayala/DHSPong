@@ -9,5 +9,6 @@ extern const Palette pal2;
 extern const SpriteDefinition ball;
 extern const SpriteDefinition marc1;
 extern const SpriteDefinition hit;
+extern const SpriteDefinition coin;
 
 #endif // _RES_SPRT_H_

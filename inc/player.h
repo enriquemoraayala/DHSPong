@@ -1,6 +1,7 @@
 #ifndef _H_PLAYER
 #define _H_PLAYER
 #include <genesis.h>
+#include "physics.h"
 
 typedef enum player_mode
 {
@@ -26,6 +27,8 @@ typedef struct
     s16 score;
     Input input;
     PlayerMode playerMode;
+    s16 hits_counter;
+    Coin playerCoins[MAX_COINS];
 } Player;
 
 void initPlayer(Player *, u16, u16, PlayerMode);

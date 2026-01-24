@@ -28,6 +28,9 @@
 #define LATERAL_EDGE_HEIGHT 224
 #define LATERAL_EDGE 312
 
+#define MAX_COINS 2
+#define COIN_SPEED FIX16(2)   // px por frame aprox
+#define COIN_TTL 260        // frames (3s a 60fps)
 
 typedef struct {
     u16 x;

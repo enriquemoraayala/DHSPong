@@ -3,6 +3,7 @@
 
     #include <genesis.h>
     #include "player.h"
+    #include "physics.h"
 
     typedef enum state
     {
@@ -31,6 +32,17 @@
         bool goalhit;
         bool paddlehit;
     } Ball;
+
+    typedef struct{
+        Sprite *coinSpr;
+        s16 x;
+        s16 y;
+        s16 dx;
+        s16 dy;
+        bool active;
+    } Coin;
+
+    static Coin coins[MAX_COINS];
 
     typedef struct
     {
@@ -88,5 +100,13 @@
     void deInitGame();
 
     void drawBall();
+
+    void initCoin(void);
+
+    void updateCoin(void);
+
+    void drawCoin(void);
+
+    void hideCoin(Coin *);
 
 #endif
