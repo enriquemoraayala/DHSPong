@@ -23,25 +23,24 @@ void drawInitMenu(void){
 }
 
 void updateMenu(void){
-
-        switch(game.player1.input){
-            case UP:
-            case DOWN:
-                menuStruct.twoPlayers++;
-                break;
-            case START:
-                if(menuStruct.twoPlayers%2 == 0){
-                    game.singlePlayer = FALSE;
-                }else{
-                    game.singlePlayer = TRUE;
-                }
-                break;
-        }
+    switch(game.player1.input){
+        case UP:
+        case DOWN:
+            menuStruct.twoPlayers = !menuStruct.twoPlayers;
+            break;
+        case START:
+            game.singlePlayer = !menuStruct.twoPlayers;
+            break;
+        case A:
+        case NONE:
+        default:
+            break;
+    }
 
 }
 
 void drawMenu(void){
-    if(menuStruct.twoPlayers%2 == 0){
+    if(menuStruct.twoPlayers){
         SPR_setPosition(menuStruct.menuSel1, 75, 162);
         SPR_setPosition(menuStruct.menuSel2, 230, 162);
     }else{

@@ -3,7 +3,7 @@
 #include <genesis.h>
 
 #define PLAYER_SPEED 3
-#define BALL_SPEED 4
+#define BALL_SPEED 3
 #define BALL_MAX_SPEED 8
 #define BALL_OFFSET 8
 #define BALL_DIAMETRE 16
@@ -29,8 +29,11 @@
 #define LATERAL_EDGE 312
 
 #define MAX_COINS 2
-#define COIN_SPEED FIX16(2)   // px por frame aprox
+#define COIN_HITS_INTERVAL 2
+#define COIN_SPEED 2   // px por frame aprox
 #define COIN_TTL 260        // frames (3s a 60fps)
+#define INIT_COIN_X 150
+#define INIT_COIN_Y 90
 
 typedef struct {
     u16 x;

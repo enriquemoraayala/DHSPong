@@ -28,7 +28,8 @@ typedef struct
     Input input;
     PlayerMode playerMode;
     s16 hits_counter;
-    Coin playerCoins[MAX_COINS];
+    u8 numActiveCoins;
+    u16 playerCoins[MAX_COINS];
 } Player;
 
 void initPlayer(Player *, u16, u16, PlayerMode);
@@ -38,5 +39,7 @@ void updatePlayer(Player *);
 void drawPlayer(Player *);
 
 s8 isTouchingPaddle(Player*, u16, u16, u16, u16);
+
+s8 isTouchingCoin(Player*, u16, u16, u16, u16);
 
 #endif

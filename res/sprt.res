@@ -4,4 +4,4 @@ PALETTE pal2 "sprt/bat2.png" NONE
 SPRITE ball "sprt/ball.png" 4 4 NONE 
 SPRITE marc1 "sprt/marc1.png" 2 2 NONE 0
 SPRITE hit "sprt/impact.png" 3 3 NONE 4
-SPRITE coin "sprt/coins2.png" 6 6 NONE 6
+SPRITE coin "sprt/coins3.png" 2 2 NONE 6

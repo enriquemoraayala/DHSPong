@@ -42,13 +42,12 @@
         bool active;
     } Coin;
 
-    static Coin coins[MAX_COINS];
-
     typedef struct
     {
         Player player1;
         Player player2;
         Ball ball;
+        Coin coins[MAX_COINS];
         Status state;
         u8 lastScored;
         bool singlePlayer;
@@ -97,16 +96,22 @@
 
     void updateBall();
 
+    void activateCoins(Player *);
+
     void deInitGame();
 
     void drawBall();
 
     void initCoin(void);
 
-    void updateCoin(void);
+    void resetCoins(void);
 
-    void drawCoin(void);
+    void updateCoins(void);
+
+    void drawCoins(void);
 
     void hideCoin(Coin *);
+
+    s8 activateNextCoin(void);
 
 #endif

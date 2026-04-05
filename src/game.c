@@ -75,6 +75,16 @@ void initGame()
     game.ball.dy = 0;
     game.player1.score = 0;
     game.player2.score = 0;
+    game.player1.hits_counter = 0;
+    game.player1.numActiveCoins = 0;
+    game.player2.hits_counter = 0;
+    game.player2.numActiveCoins = 0;
+    for (u16 i = 0; i < MAX_COINS; i++)
+    {
+        game.player1.playerCoins[i] = 0;
+        game.player2.playerCoins[i] = 0;
+    }
+    resetCoins();
     game.ball.bounced = FALSE;
     game.ball.goalhit = FALSE;
     game.ball.paddlehit = FALSE;
@@ -85,6 +95,7 @@ void updateGame(){
     updatePlayer(&game.player1);
     updatePlayer(&game.player2);
     updateBall();
+    updateCoins();
 }
 
 void updateGameOver(){
@@ -100,6 +111,14 @@ void deInitGame(){
     SPR_releaseSprite(game.player2.sprite);
     SPR_releaseSprite(game.player1.marc);
     SPR_releaseSprite(game.player2.marc);
+    for (u16 i = 0; i < MAX_COINS; i++)
+    {
+        if (game.coins[i].coinSpr != NULL)
+        {
+            SPR_releaseSprite(game.coins[i].coinSpr);
+            game.coins[i].coinSpr = NULL;
+        }
+    }
 }
 
 void drawInitGame()
@@ -116,6 +135,7 @@ void drawInitGame()
     game.player2.sprite = SPR_addSprite(&bat1, game.player2.x, game.player2.y, TILE_ATTR(PAL2, FALSE, FALSE, TRUE));
     game.player2.marc = SPR_addSprite(&marc1,296,32,TILE_ATTR(PAL1,TRUE, FALSE, FALSE));
     game.ball.sprite = SPR_addSprite(&ball, game.ball.x, game.ball.y, TILE_ATTR(PAL3, FALSE, FALSE, FALSE));
+    initCoin();
     SPR_setAnim(game.player1.marc, 0);
     SPR_setAnim(game.player2.marc, 0);
 }
@@ -124,6 +144,7 @@ void drawGame(){
     drawPlayer(&game.player1);
     drawPlayer(&game.player2);
     drawBall();
+    drawCoins();
 }
 
 

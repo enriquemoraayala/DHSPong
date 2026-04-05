@@ -5,12 +5,14 @@
 #include "sprt.h"
 #include "sound.h"
 
-void paddelTouched(s8 paddelTouch);
+void paddelTouched(s8 paddelTouch, Player *);
 void restartGame();
 void deInitImpact(Sprite *);
 
 void updateBall()
 {
+    bool wallBounceThisFrame = FALSE;
+
     if (!game.ball.launched)
     {
         if (game.player1.input == A)
@@ -42,9 +44,10 @@ void updateBall()
             }
             game.ball.impact = TRUE;
             game.ball.bounced = TRUE;
+            wallBounceThisFrame = TRUE;
             XGM2_playPCM(bounce, sizeof(bounce), SOUND_PCM_CH_AUTO);
         }
-        if (isTouchingBottom(game.ball.x + 8, game.ball.y + 8, 13, 13))
+        else if (isTouchingBottom(game.ball.x + 8, game.ball.y + 8, 13, 13))
         {
             XGM2_playPCM(bounce, sizeof(bounce), SOUND_PCM_CH_AUTO);
             if (game.ball.dy > BALL_SPEED)
@@ -57,9 +60,10 @@ void updateBall()
             }
             game.ball.impact = TRUE;
             game.ball.bounced = TRUE;
+            wallBounceThisFrame = TRUE;
         }
 
-        if (isTouchingLeftEdge(game.ball.x + 8, game.ball.y + 8, 13, 13))
+        if (!wallBounceThisFrame && isTouchingLeftEdge(game.ball.x + 8, game.ball.y + 8, 13, 13))
         {
             game.player2.score++;
             game.lastScored = 2;
@@ -75,7 +79,7 @@ void updateBall()
             }
         }
 
-        if (isTouchingRightEdge(game.ball.x + 8, game.ball.y + 8, 13, 13))
+        if (!wallBounceThisFrame && isTouchingRightEdge(game.ball.x + 8, game.ball.y + 8, 13, 13))
         {
             game.player1.score++;
             game.lastScored = 1;
@@ -90,23 +94,43 @@ void updateBall()
                 restartGame();
             }
         }
-        s8 touchingpaddel1 = isTouchingPaddle(&game.player1, game.ball.x + BALL_OFFSET, game.ball.y + BALL_OFFSET, BALL_DIAMETRE, BALL_DIAMETRE);
-        if (touchingpaddel1 != 0)
+        if (!wallBounceThisFrame)
         {
-            paddelTouched(touchingpaddel1);
-            KLog_S1("Toca el paddle 1: ", touchingpaddel1);
-            KLog_S1("dx: ", game.ball.dx);
-            KLog_S1("dy: ", game.ball.dy);
+            s8 touchingpaddel1 = isTouchingPaddle(&game.player1, game.ball.x + BALL_OFFSET, game.ball.y + BALL_OFFSET, BALL_DIAMETRE, BALL_DIAMETRE);
+            if (touchingpaddel1 != 0)
+            {
+                paddelTouched(touchingpaddel1, &game.player1);
+                activateCoins(&game.player1);
+            }
+            s8 touchingpaddel2 = isTouchingPaddle(&game.player2, game.ball.x + BALL_OFFSET, game.ball.y + BALL_OFFSET, BALL_DIAMETRE, BALL_DIAMETRE);
+            if (touchingpaddel2 != 0)
+            {
+                paddelTouched(touchingpaddel2, &game.player2);
+                activateCoins(&game.player2);
+            }
         }
-        s8 touchingpaddel2 = isTouchingPaddle(&game.player2, game.ball.x + BALL_OFFSET, game.ball.y + BALL_OFFSET, BALL_DIAMETRE, BALL_DIAMETRE);
-        paddelTouched(touchingpaddel2);
 
         game.ball.x += game.ball.dx;
         game.ball.y += game.ball.dy;
     }
 }
 
-void paddelTouched(s8 paddelTouch)
+void activateCoins(Player *player)
+{
+    player->hits_counter++;
+
+    if ((player->hits_counter % COIN_HITS_INTERVAL) == 0)
+    {
+        s8 coin_indx = activateNextCoin();
+        if ((coin_indx < MAX_COINS) && (player->numActiveCoins < MAX_COINS))
+        {
+            player->playerCoins[player->numActiveCoins] = coin_indx;
+            player->numActiveCoins++;
+        }
+    }
+}
+
+void paddelTouched(s8 paddelTouch, Player *player)
 {
     // value 0 = FALSE
     // value != o -> hemos tocado algo
@@ -115,6 +139,7 @@ void paddelTouched(s8 paddelTouch)
         XGM2_playPCM(playerhit, sizeof(playerhit), SOUND_PCM_CH_AUTO);   
         game.ball.impact = TRUE;
         game.ball.paddlehit = TRUE;
+
         switch (paddelTouch)
         {
         case -1:
@@ -149,6 +174,16 @@ void restartGame()
     game.player1.y = PLAYER_INITIAL_Y;
     game.player2.x = PLAYER2_INITIAL_X;
     game.player2.y = PLAYER_INITIAL_Y;
+    game.player1.hits_counter = 0;
+    game.player1.numActiveCoins = 0;
+    game.player2.hits_counter = 0;
+    game.player2.numActiveCoins = 0;
+    for (u16 i = 0; i < MAX_COINS; i++)
+    {
+        game.player1.playerCoins[i] = 0;
+        game.player2.playerCoins[i] = 0;
+    }
+    resetCoins();
     game.ball.dx = 0;
     game.ball.dy = 0;
     game.ball.x = BALL_INITIAL_X;
