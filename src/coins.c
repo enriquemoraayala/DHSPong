@@ -51,6 +51,7 @@ void updateCoins(void){
     for(u8 i = 0; i < game.player1.numActiveCoins; i++){
         game.coins[game.player1.playerCoins[i]].x -= COIN_SPEED;
         s8 coinIndex = isTouchingCoin(&game.player1, game.coins[game.player1.playerCoins[i]].x, game.coins[game.player1.playerCoins[i]].y, 16, 16);
+        KLog_F1("coinIndex: %d", coinIndex);
         if ((coinIndex >= 0) && (coinIndex < MAX_COINS)) {
             hideCoin(&game.coins[(u16) coinIndex]);
         }

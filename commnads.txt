@@ -1,0 +1,1 @@
+docker run --rm -it --platform linux/amd64 --entrypoint /bin/bash zerasul/sgdk:2.00
