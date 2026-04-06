@@ -127,15 +127,15 @@ void drawInitGame()
     SYS_disableInts();
     VDP_drawImageEx(BG_A, &table, TILE_ATTR_FULL(PAL0, FALSE, FALSE, FALSE, index), 0, 0, TRUE, DMA);
     PAL_setPalette(PAL1, bat1.palette->data, CPU);
-    PAL_setPalette(PAL2, pal2.data, CPU);
+    PAL_setPalette(PAL2, coin.palette->data, CPU);
     PAL_setPalette(PAL3, ball.palette->data, CPU);
     SYS_enableInts();
     game.player1.sprite = SPR_addSprite(&bat1, game.player1.x, game.player1.y, TILE_ATTR(PAL1, FALSE, FALSE, FALSE));
     game.player1.marc = SPR_addSprite(&marc1,24,32,TILE_ATTR(PAL1,TRUE, FALSE, FALSE));
-    game.player2.sprite = SPR_addSprite(&bat1, game.player2.x, game.player2.y, TILE_ATTR(PAL2, FALSE, FALSE, TRUE));
+    game.player2.sprite = SPR_addSprite(&bat1, game.player2.x, game.player2.y, TILE_ATTR(PAL1, FALSE, FALSE, TRUE));
     game.player2.marc = SPR_addSprite(&marc1,296,32,TILE_ATTR(PAL1,TRUE, FALSE, FALSE));
     game.ball.sprite = SPR_addSprite(&ball, game.ball.x, game.ball.y, TILE_ATTR(PAL3, FALSE, FALSE, FALSE));
-    initCoin();
+    drawInitCoin();
     SPR_setAnim(game.player1.marc, 0);
     SPR_setAnim(game.player2.marc, 0);
 }

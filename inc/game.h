@@ -94,6 +94,8 @@
 
     void drawInitGame();
 
+    void drawInitCoins(void);
+
     void updateBall();
 
     void activateCoins(Player *);

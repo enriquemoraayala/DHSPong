@@ -33,7 +33,6 @@ int main()
 
 void init()
 {
-    KLog_S1("Init", 1);
     VDP_setScreenWidth320();
     JOY_init();
     XGM2_setFMVolume(80);
@@ -44,7 +43,6 @@ void init()
 
 void checkInputs()
 {
-    KLog_S1("Check Inputs", 1);
     game.player1.input = checkInput(JOY_1);
     if (!game.singlePlayer)
     {
@@ -61,12 +59,10 @@ void update()
     switch (game.state)
     {
     case INIT_LOGO:
-        KLog_S1("Init Logo", 1);
         initLogo();
         break;
     case LOGO:
         updateLogo();
-        KLog_S1("Update Logo", 2);
         break;
     case INIT_MENU:
         initMenu();
